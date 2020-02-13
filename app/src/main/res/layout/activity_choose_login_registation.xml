@@ -5,20 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".ChooseLoginRegistationActivity">
+
 
     <Button
-        android:id="@+id/btn_dang_xuat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Logout" />
-
-    <com.lorentzos.flingswipe.SwipeFlingAdapterView
-        android:id="@+id/frame"
-        android:background="#ffeee9e2"
+        android:id="@+id/btn_login"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:rotation_degrees="15.5"
-        tools:context=".MyActivity" />
+        android:layout_height="wrap_content"
+        android:text="Login" />
 
+    <Button
+        android:id="@+id/btn_register"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Register" />
 </LinearLayout>

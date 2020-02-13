@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "980405928796",
+    "firebase_url": "https://houer-vietnam.firebaseio.com",
+    "project_id": "houer-vietnam",
+    "storage_bucket": "houer-vietnam.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:980405928796:android:74c3f4ee1e8fa36a507799",
+        "android_client_info": {
+          "package_name": "com.example.houer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "980405928796-oqq0k1ff2f6ltbbktl3m9q3tfmch2k4e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.houer",
+            "certificate_hash": "81f88823f516278f033932e38732ccb17edc0952"
+          }
+        },
+        {
+          "client_id": "980405928796-p3jrru2fh3mjf9uclt7phbiehadg3mhj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD62zYwBPUEDkT1Le3CC-fwMdOAUEqQ5DU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "980405928796-p3jrru2fh3mjf9uclt7phbiehadg3mhj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
