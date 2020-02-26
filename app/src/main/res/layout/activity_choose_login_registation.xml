@@ -1,28 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+<RelativeLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/img_bg_choose_login_and_signup"
-    android:orientation="vertical"
-    tools:context=".ChooseLoginRegistationActivity">
-
-
-    <Button
-        android:fontFamily="@font/gotham_medium"
-        android:textColor="@color/colorWhite"
-        android:background="@drawable/button_login"
-        android:id="@+id/btn_login"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <ImageView
+        android:scaleType="centerCrop"
+        android:src="@drawable/img_bg_choose_login_and_signup"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Đăng Nhập" />
+        android:layout_height="match_parent">
 
-    <Button
-
-        android:fontFamily="@font/gotham_medium"
-        android:id="@+id/btn_register"
+    </ImageView>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Đăng Ký" />
-</LinearLayout>
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".ChooseLoginRegistationActivity">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <believe.cht.fadeintextview.TextView
+                android:fontFamily="@font/iciel_panton_black"
+                android:paddingTop="110dp"
+                android:id="@+id/tv_welcome"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal|center_vertical"
+                android:textColor="@color/colorWhite"
+                android:textSize="18dp"
+                app:letterDuration="50" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginHorizontal="70dp"
+            android:layout_marginTop="-70dp"
+            android:background="@drawable/button_login"
+            android:fontFamily="@font/iciel_panton_black"
+            android:text="Đăng nhập"
+            android:textAllCaps="false"
+            android:textColor="@color/colorWhite"
+            android:textSize="14dp" />
+
+        <Button
+            android:id="@+id/btn_register"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginHorizontal="70dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/button_sign_up"
+            android:fontFamily="@font/iciel_panton_black"
+            android:text="Đăng Ký"
+            android:textAllCaps="false"
+            android:textColor="@color/colorWhite"
+            android:textSize="14dp" />
+    </LinearLayout>
+</RelativeLayout>
