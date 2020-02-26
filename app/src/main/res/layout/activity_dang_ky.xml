@@ -2,47 +2,51 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ln_dang_ky"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".DangKyActivity">
 
     <EditText
-        android:hint="Name"
         android:id="@+id/edt_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:hint="Name"
         android:inputType="textPersonName" />
+
     <RadioGroup
         android:id="@+id/radioGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
+
         <RadioButton
-            android:text="Nam"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"></RadioButton>
+            android:layout_height="wrap_content"
+            android:text="Nam"></RadioButton>
+
         <RadioButton
-            android:text="Nu"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"></RadioButton>
+            android:layout_height="wrap_content"
+            android:text="Nu"></RadioButton>
     </RadioGroup>
 
     <EditText
-        android:hint="email"
         android:id="@+id/edt_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:hint="email"
         android:inputType="textPersonName"
         android:text="" />
 
     <EditText
-        android:hint="pass"
         android:id="@+id/edt_pass"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:hint="pass"
         android:inputType="textPersonName"
         android:text="" />
 

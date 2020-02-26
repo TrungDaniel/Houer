@@ -4,19 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/img_bg_choose_login_and_signup"
     android:orientation="vertical"
     tools:context=".ChooseLoginRegistationActivity">
 
 
     <Button
+        android:fontFamily="@font/gotham_medium"
+        android:textColor="@color/colorWhite"
+        android:background="@drawable/button_login"
         android:id="@+id/btn_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Login" />
+        android:text="Đăng Nhập" />
 
     <Button
+
+        android:fontFamily="@font/gotham_medium"
         android:id="@+id/btn_register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Register" />
+        android:text="Đăng Ký" />
 </LinearLayout>
