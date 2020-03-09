@@ -21,6 +21,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class DangKyActivity extends AppCompatActivity {
     private Button btnDangKy;
     private EditText edtEmail, edtPass, edtName;
@@ -72,10 +75,15 @@ public class DangKyActivity extends AppCompatActivity {
                                 String userId = mAuth.getCurrentUser().getUid(); // lấy uId người dùng
                                 // truyền dữ liệu lên firebase
                                 DatabaseReference currentDb = FirebaseDatabase.getInstance().getReference()
-                                        .child("Users").child(radioButton.getText().toString()).child(userId).child("Name");
-                                currentDb.setValue(nameUser);
+                                        .child("Users").child(userId);
+                                Map userInfo = new HashMap();
+                                userInfo.put("Name", nameUser);
+                                userInfo.put("sex", radioButton.getText().toString());
+                                userInfo.put("profileImageUrl", "default");
+                                currentDb.updateChildren(userInfo);
                                 Snackbar.make(findViewById(R.id.ln_dang_ky), "Đăng ký thành công", Snackbar.LENGTH_LONG)
                                         .setAction("Action", null).show();
+
                             }
                         }
                     });

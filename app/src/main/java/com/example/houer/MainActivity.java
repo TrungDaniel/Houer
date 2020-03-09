@@ -4,12 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -21,6 +19,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
 import java.util.ArrayList;
@@ -32,9 +31,9 @@ public class MainActivity extends AppCompatActivity {
 
     private ArrayAdapterCards arrayAdapterCards;
     private int i;
-    private Button btnDangXuat;
+    private Button btnDangXuat, btnSetting;
     private FirebaseAuth mAuth;
-    private DatabaseReference userDb;
+    private DatabaseReference usersDb;
     ListView listView;
     List<Cards> rowItems;
     private String currentUId;
@@ -69,8 +68,8 @@ public class MainActivity extends AppCompatActivity {
 
                 Cards obj = (Cards) dataObject;
                 String userId = obj.getUserId();
-                userDb.child(notuserSex).child(userId).child("connection").child("nope").child(currentUId).setValue(true);
-                Toast.makeText(MainActivity.this, "Left", Toast.LENGTH_SHORT).show();
+                usersDb.child(userId).child("connection").child("nope").child(currentUId).setValue(true);
+
 
             }
 
@@ -78,8 +77,8 @@ public class MainActivity extends AppCompatActivity {
             public void onRightCardExit(Object dataObject) {
                 Cards obj = (Cards) dataObject;
                 String userId = obj.getUserId();
-                userDb.child(notuserSex).child(userId).child("connection").child("yeps").child(currentUId).setValue(true);
-                Toast.makeText(MainActivity.this, "Right", Toast.LENGTH_SHORT).show();
+                usersDb.child(userId).child("connection").child("yeps").child(currentUId).setValue(true);
+                isConnectionMath(userId);
             }
 
             @Override
@@ -106,75 +105,48 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private String userSex;
-    private String notuserSex;
+    private String oppositeUserSex;
 
-    private void checkUserSex() {
+    public void checkUserSex() {
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference maleDb = FirebaseDatabase.getInstance().getReference().child("Users").child("Nam");
-        maleDb.addChildEventListener(new ChildEventListener() {
+        DatabaseReference userDb = usersDb.child(user.getUid());
+        userDb.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                if (dataSnapshot.getKey().equals(user.getUid())) {
-                    userSex = "Nam";
-                    notuserSex = "Nu";
-                    getNotUserSex();
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    if (dataSnapshot.child("sex").getValue() != null) {
+                        userSex = dataSnapshot.child("sex").getValue().toString();
+                        switch (userSex) {
+                            case "Male":
+                                oppositeUserSex = "Female";
+                                break;
+                            case "Female":
+                                oppositeUserSex = "Male";
+                                break;
+                        }
+                        getOppositeUserSex();
+                    }
                 }
             }
 
             @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-            }
+            public void onCancelled(DatabaseError databaseError) {
 
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });
-
-
-        DatabaseReference femaleDb = FirebaseDatabase.getInstance().getReference().child("Users").child("Nu");
-        femaleDb.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                if (dataSnapshot.getKey().equals(user.getUid())) {
-                    userSex = "Nu";
-                    notuserSex = "Nam";
-                    getNotUserSex();
-                }
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
     }
 
-    public void getNotUserSex() {
-        DatabaseReference notSexDb = FirebaseDatabase.getInstance().getReference().child("Users").child(notuserSex);
-        notSexDb.addChildEventListener(new ChildEventListener() {
+    public void getOppositeUserSex() {
+        usersDb.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                if (dataSnapshot.exists() && !dataSnapshot.child("connection").child("nope").hasChild(currentUId) && !dataSnapshot.child("connection").child("yeps").hasChild(currentUId)) {
-                    Cards cardsName = new Cards(dataSnapshot.getKey(), dataSnapshot.child("Name").getValue().toString());
+                if (dataSnapshot.exists() && !dataSnapshot.child("connection").child("nope").hasChild(currentUId) && !dataSnapshot.child("connection").child("yeps").hasChild(currentUId)
+                        && dataSnapshot.child("sex").getValue().toString().equals(oppositeUserSex)) {
+                    String profileImageUrl = "default";
+                    if (!dataSnapshot.child("profileImageUrl").getValue().equals("default")) {
+                        profileImageUrl = dataSnapshot.child("profileImageUrl").getValue().toString();
+                    }
+                    Cards cardsName = new Cards(dataSnapshot.getKey(), dataSnapshot.child("Name").getValue().toString(), profileImageUrl);
                     rowItems.add(cardsName);
                     arrayAdapterCards.notifyDataSetChanged();
                 }
@@ -212,11 +184,42 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    // chức năng nếu 2 người dùng cùng vuốt sang phải thì họ sẽ được add với nhau
+    private void isConnectionMath(String userId) {
+        // lấy user id của người mà bạn vừa vuốt sang phải
+        DatabaseReference currentUserConnection = usersDb.child(currentUId).child("connection").child("yeps").child(userId);
+        currentUserConnection.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    Toast.makeText(MainActivity.this, "Bạn và người đó rất hợp nhau", Toast.LENGTH_SHORT).show();
+                    // đưa id người dùng vào bảng connection
+                    usersDb.child(dataSnapshot.getKey()).child("connection").child("mathces").child(currentUId).setValue(true);
+                    usersDb.child(currentUId).child("connection").child("mathces").child(dataSnapshot.getKey()).setValue(true);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
     private void init() {
         btnDangXuat = findViewById(R.id.btn_dang_xuat);
         mAuth = FirebaseAuth.getInstance();
-        userDb = FirebaseDatabase.getInstance().getReference().child("Users");
+        usersDb = FirebaseDatabase.getInstance().getReference().child("Users");
         currentUId = mAuth.getCurrentUser().getUid();
+        btnSetting = findViewById(R.id.btn_setting);
+        btnSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, SettingUsersActivity.class);
+                startActivity(intent);
+
+            }
+        });
     }
 
 

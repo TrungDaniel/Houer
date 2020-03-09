@@ -5,42 +5,44 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
+    android:clipToPadding="false"
     android:outlineProvider="bounds"
-
-    android:paddingHorizontal="40sp"
-    android:paddingVertical="20sp">
+    android:paddingLeft="40sp"
+    android:paddingTop="20sp"
+    android:paddingRight="40sp"
+    android:paddingBottom="20sp">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/card_view"
+        android:id="@+id/cardView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:elevation="2dp"
         app:cardCornerRadius="4dp">
 
-        <FrameLayout
+        <LinearLayout
+            android:layout_width="300dp"
+            android:layout_height="350dp"
             android:layout_gravity="center"
-            android:layout_width="250dp"
-            android:layout_height="170dp">
-            <ImageView
-                android:id="@+id/img_item"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+            android:orientation="vertical">
 
-            </ImageView>
+            <ImageView
+                android:id="@+id/item_image"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:scaleType="centerCrop" />
 
             <TextView
-                android:id="@+id/tv_item_name"
+                android:id="@+id/name"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center"
+                android:gravity="center|left"
+                android:paddingLeft="20sp"
                 android:textColor="@android:color/black"
-                android:textSize="40sp"
-                tools:text="Hello" />
+                android:textSize="30sp"
+                tools:text="hello" />
 
-
-        </FrameLayout>
-
+        </LinearLayout>
     </androidx.cardview.widget.CardView>
 
 
