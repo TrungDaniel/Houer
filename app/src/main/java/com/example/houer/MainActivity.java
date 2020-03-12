@@ -12,6 +12,9 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.houer.cards.ArrayAdapterCards;
+import com.example.houer.cards.Cards;
+import com.example.houer.userKetNoi.NguoiKetNoiActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -31,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ArrayAdapterCards arrayAdapterCards;
     private int i;
-    private Button btnDangXuat, btnSetting;
+    private Button btnDangXuat, btnSetting, btnNguoiKetNoi;
     private FirebaseAuth mAuth;
     private DatabaseReference usersDb;
     ListView listView;
@@ -68,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Cards obj = (Cards) dataObject;
                 String userId = obj.getUserId();
-                usersDb.child(userId).child("connection").child("nope").child(currentUId).setValue(true);
+                usersDb.child(userId).child("connections").child("nope").child(currentUId).setValue(true);
 
 
             }
@@ -77,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
             public void onRightCardExit(Object dataObject) {
                 Cards obj = (Cards) dataObject;
                 String userId = obj.getUserId();
-                usersDb.child(userId).child("connection").child("yeps").child(currentUId).setValue(true);
+                usersDb.child(userId).child("connections").child("yeps").child(currentUId).setValue(true);
                 isConnectionMath(userId);
             }
 
@@ -140,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
         usersDb.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                if (dataSnapshot.exists() && !dataSnapshot.child("connection").child("nope").hasChild(currentUId) && !dataSnapshot.child("connection").child("yeps").hasChild(currentUId)
+                if (dataSnapshot.exists() && !dataSnapshot.child("connections").child("nope").hasChild(currentUId) && !dataSnapshot.child("connections").child("yeps").hasChild(currentUId)
                         && dataSnapshot.child("sex").getValue().toString().equals(oppositeUserSex)) {
                     String profileImageUrl = "default";
                     if (!dataSnapshot.child("profileImageUrl").getValue().equals("default")) {
@@ -187,15 +190,20 @@ public class MainActivity extends AppCompatActivity {
     // chức năng nếu 2 người dùng cùng vuốt sang phải thì họ sẽ được add với nhau
     private void isConnectionMath(String userId) {
         // lấy user id của người mà bạn vừa vuốt sang phải
-        DatabaseReference currentUserConnection = usersDb.child(currentUId).child("connection").child("yeps").child(userId);
+        DatabaseReference currentUserConnection = usersDb.child(currentUId).child("connections").child("yeps").child(userId);
         currentUserConnection.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
+
                     Toast.makeText(MainActivity.this, "Bạn và người đó rất hợp nhau", Toast.LENGTH_SHORT).show();
-                    // đưa id người dùng vào bảng connection
-                    usersDb.child(dataSnapshot.getKey()).child("connection").child("mathces").child(currentUId).setValue(true);
-                    usersDb.child(currentUId).child("connection").child("mathces").child(dataSnapshot.getKey()).setValue(true);
+
+                    // tạo id chats
+                    String key = FirebaseDatabase.getInstance().getReference().child("Chat").push().getKey();
+
+                    usersDb.child(dataSnapshot.getKey()).child("connections").child("matches").child(currentUId).child("ChatId").setValue(key);
+                    usersDb.child(currentUId).child("connections").child("matches").child(dataSnapshot.getKey()).child("ChatId").setValue(key);
+
                 }
             }
 
@@ -218,6 +226,14 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, SettingUsersActivity.class);
                 startActivity(intent);
 
+            }
+        });
+        btnNguoiKetNoi = findViewById(R.id.btn_nguoi_ket_noi);
+        btnNguoiKetNoi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, NguoiKetNoiActivity.class);
+                startActivity(intent);
             }
         });
     }

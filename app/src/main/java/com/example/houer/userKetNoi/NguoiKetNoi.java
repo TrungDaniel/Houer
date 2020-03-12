@@ -1,13 +1,13 @@
-package com.example.houer;
+package com.example.houer.userKetNoi;
 
-public class Cards {
+public class NguoiKetNoi {
     private String userId;
-    private String name;
+    private String Name;
     private String profileImageUrl;
 
-    public Cards(String userId, String name, String profileImageUrl) {
+    public NguoiKetNoi(String userId, String name, String profileImageUrl) {
         this.userId = userId;
-        this.name = name;
+        Name = name;
         this.profileImageUrl = profileImageUrl;
     }
 
@@ -15,16 +15,16 @@ public class Cards {
         return userId;
     }
 
-    public void setUserID(String userID) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
     public String getName() {
-        return name;
+        return Name;
     }
 
     public void setName(String name) {
-        this.name = name;
+        Name = name;
     }
 
     public String getProfileImageUrl() {

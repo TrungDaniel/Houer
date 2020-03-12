@@ -1,4 +1,4 @@
-package com.example.houer;
+package com.example.houer.cards;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.houer.R;
+import com.example.houer.cards.Cards;
 
 import java.util.List;
 
