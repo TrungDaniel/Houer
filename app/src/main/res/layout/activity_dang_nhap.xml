@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:background="@drawable/img_bg_login_sign"
+    android:id="@+id/ln_dang_nhap"
     android:orientation="vertical"
     android:layout_height="match_parent"
 

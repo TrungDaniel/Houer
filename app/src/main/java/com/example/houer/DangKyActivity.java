@@ -3,11 +3,13 @@ package com.example.houer;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -31,6 +33,7 @@ public class DangKyActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener firebaseAuthStateListener;
     private Snackbar snackbar;
+    private ProgressDialog progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,20 +61,29 @@ public class DangKyActivity extends AppCompatActivity {
                     Snackbar.make(findViewById(R.id.ln_dang_ky), "Vui lòng nhập đầy đủ", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
 
+
                 }
                 // không null thì vào đây
                 else {
+                    progress = new ProgressDialog(DangKyActivity.this);
+                    progress.setTitle("Vui lòng đợi!!");
+                    progress.setMessage("Tài khoản của bạn đang đợi tạo");
+                    progress.setCancelable(false);
+                    progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                    progress.show();
                     // đăng ký với email và mật khẩu
                     mAuth.createUserWithEmailAndPassword(emailUser, passUser).addOnCompleteListener(DangKyActivity.this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             // nếu đăng ký thất bại
                             if (!task.isSuccessful()) {
-                                Snackbar.make(findViewById(R.id.ln_dang_ky), "Đăng ký thất bại", Snackbar.LENGTH_LONG)
+                                Snackbar.make(findViewById(R.id.ln_dang_ky), "Đăng ký thất bại, kiểm tra lại thông tin", Snackbar.LENGTH_LONG)
                                         .setAction("Action", null).show();
+                                progress.dismiss();
                             }
                             // nếu đăng ký thành công
                             else {
+
                                 String userId = mAuth.getCurrentUser().getUid(); // lấy uId người dùng
                                 // truyền dữ liệu lên firebase
                                 DatabaseReference currentDb = FirebaseDatabase.getInstance().getReference()
@@ -81,8 +93,8 @@ public class DangKyActivity extends AppCompatActivity {
                                 userInfo.put("sex", radioButton.getText().toString());
                                 userInfo.put("profileImageUrl", "default");
                                 currentDb.updateChildren(userInfo);
-                                Snackbar.make(findViewById(R.id.ln_dang_ky), "Đăng ký thành công", Snackbar.LENGTH_LONG)
-                                        .setAction("Action", null).show();
+
+                                progress.dismiss();
 
                             }
                         }

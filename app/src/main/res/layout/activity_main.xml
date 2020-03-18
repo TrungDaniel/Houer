@@ -7,23 +7,55 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/btn_dang_xuat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Logout" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp">
 
-    <Button
-        android:id="@+id/btn_setting"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="setting" />
+        <Button
+            android:id="@+id/btn_setting"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@drawable/ic_user_default"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btn_main"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/btn_nguoi_ket_noi"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Nguoi ket noi" />
+        <Button
+            android:id="@+id/btn_main"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@drawable/ic_tinder"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btn_nguoi_ket_noi"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/btn_setting"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btn_nguoi_ket_noi"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@drawable/ic_chat"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btn_dang_xuat"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/btn_main"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btn_dang_xuat"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@drawable/ic_logout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/btn_nguoi_ket_noi"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     <com.lorentzos.flingswipe.SwipeFlingAdapterView
         android:id="@+id/frame"
