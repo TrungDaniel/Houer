@@ -12,17 +12,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".chat.ChatsActivity"></activity>
+        <activity android:name=".NavigationActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".chat.ChatsActivity" />
         <activity android:name=".userKetNoi.NguoiKetNoiActivity" />
         <activity android:name=".SettingUsersActivity" />
         <activity android:name=".DangNhapActivity" />
         <activity android:name=".DangKyActivity" />
         <activity android:name=".ChooseLoginRegistationActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
     </application>

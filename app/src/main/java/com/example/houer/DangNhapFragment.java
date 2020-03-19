@@ -1,15 +1,19 @@
 package com.example.houer;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -18,7 +22,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class DangNhapActivity extends AppCompatActivity {
+
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class DangNhapFragment extends Fragment {
     private Button btnDangNhap;
     private EditText edtDangNhapEmail, edtDangNhapPass;
     private FirebaseAuth mAuth;
@@ -26,14 +34,25 @@ public class DangNhapActivity extends AppCompatActivity {
     private ProgressDialog progress;
     private Snackbar snackbar;
 
+    public DangNhapFragment() {
+        // Required empty public constructor
+    }
+
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dang_nhap);
-        init();
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_dang_nhap, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        init(view);
         btnDangNhap.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(final View view) {
                 String strEmail = edtDangNhapEmail.getText().toString();
                 String strPass = edtDangNhapPass.getText().toString();
 
@@ -42,12 +61,12 @@ public class DangNhapActivity extends AppCompatActivity {
                 progress.setCancelable(false);
                 progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                 progress.show();
-                mAuth.signInWithEmailAndPassword(strEmail, strPass).addOnCompleteListener(DangNhapActivity.this, new OnCompleteListener<AuthResult>() {
+                mAuth.signInWithEmailAndPassword(strEmail, strPass).addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (!task.isSuccessful()) {
                             progress.dismiss();
-                            Snackbar.make(findViewById(R.id.ln_dang_nhap), "Đăng nhập thất bại", Snackbar.LENGTH_LONG)
+                            Snackbar.make(getActivity().findViewById(R.id.ln_dang_nhap), "Đăng nhập thất bại", Snackbar.LENGTH_LONG)
                                     .setAction("Action", null).show();
 
                         }
@@ -64,7 +83,7 @@ public class DangNhapActivity extends AppCompatActivity {
                 final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 if (user != null) {
                     progress.dismiss();
-                    Intent intent = new Intent(DangNhapActivity.this, MainActivity.class);
+                    Intent intent = new Intent(getContext(), MainActivity.class);
                     startActivity(intent);
 
                 }
@@ -72,25 +91,23 @@ public class DangNhapActivity extends AppCompatActivity {
         };
     }
 
-    private void init() {
-        btnDangNhap = findViewById(R.id.btn_dang_nhap);
-        edtDangNhapEmail = findViewById(R.id.edt_login_email);
-        edtDangNhapPass = findViewById(R.id.edt_login_pass);
+    private void init(View view) {
+        btnDangNhap = view.findViewById(R.id.btn_dang_nhap);
+        edtDangNhapEmail = view.findViewById(R.id.edt_login_email);
+        edtDangNhapPass = view.findViewById(R.id.edt_login_pass);
         mAuth = FirebaseAuth.getInstance();
-        progress = new ProgressDialog(DangNhapActivity.this);
-
+        progress = new ProgressDialog(getContext());
     }
 
     @Override
-    protected void onStart() {
+    public void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(firebaseAuthStateListener);
     }
 
     @Override
-    protected void onStop() {
+    public void onStop() {
         super.onStop();
         mAuth.removeAuthStateListener(firebaseAuthStateListener);
     }
-
 }

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/splashFragment">
+
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.example.houer.SplashFragment"
+        android:label="fragment_splash"
+        tools:layout="@layout/fragment_splash">
+        <action
+            android:id="@+id/action_splashFragment_to_chooseLoginRegistationFragment"
+            app:destination="@id/chooseLoginRegistationFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/chooseLoginRegistationFragment"
+        android:name="com.example.houer.ChooseLoginRegistationFragment"
+        android:label="fragment_choose_login_registation"
+        tools:layout="@layout/fragment_choose_login_registation">
+        <action
+            android:id="@+id/action_chooseLoginRegistationFragment_to_dangNhapFragment"
+            app:destination="@id/dangNhapFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_chooseLoginRegistationFragment_to_dangKyFragment"
+            app:destination="@id/dangKyFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/dangNhapFragment"
+        android:name="com.example.houer.DangNhapFragment"
+        android:label="fragment_dang_nhap"
+        tools:layout="@layout/fragment_dang_nhap" />
+    <fragment
+        android:id="@+id/dangKyFragment"
+        android:name="com.example.houer.DangKyFragment"
+        android:label="fragment_dang_ky"
+        tools:layout="@layout/fragment_dang_ky" />
+</navigation>

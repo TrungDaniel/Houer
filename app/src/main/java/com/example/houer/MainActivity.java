@@ -178,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 mAuth.signOut();
-                Intent intent = new Intent(MainActivity.this, ChooseLoginRegistationActivity.class);
+                Intent intent = new Intent(MainActivity.this, NavigationActivity.class);
                 startActivity(intent);
                 finish();
                 return;
