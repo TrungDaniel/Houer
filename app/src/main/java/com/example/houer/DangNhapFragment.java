@@ -8,6 +8,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +35,7 @@ public class DangNhapFragment extends Fragment {
     private FirebaseAuth.AuthStateListener firebaseAuthStateListener;
     private ProgressDialog progress;
     private Snackbar snackbar;
+
 
     public DangNhapFragment() {
         // Required empty public constructor
@@ -83,7 +86,7 @@ public class DangNhapFragment extends Fragment {
                 final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 if (user != null) {
                     progress.dismiss();
-                    Intent intent = new Intent(getContext(), MainActivity.class);
+                    Intent intent = new Intent(getContext(), HomeActivity.class);
                     startActivity(intent);
 
                 }
@@ -97,6 +100,7 @@ public class DangNhapFragment extends Fragment {
         edtDangNhapPass = view.findViewById(R.id.edt_login_pass);
         mAuth = FirebaseAuth.getInstance();
         progress = new ProgressDialog(getContext());
+
     }
 
     @Override

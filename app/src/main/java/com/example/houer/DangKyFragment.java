@@ -8,6 +8,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -128,7 +130,7 @@ public class DangKyFragment extends Fragment {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 if (user != null) {
-                    Intent intent = new Intent(getContext(), MainActivity.class);
+                    Intent intent = new Intent(getContext(), HomeActivity.class);
                     startActivity(intent);
 
                 }
@@ -143,6 +145,7 @@ public class DangKyFragment extends Fragment {
         radioGroup = view.findViewById(R.id.radioGroup);
         edtPass = view.findViewById(R.id.edt_pass);
         mAuth = FirebaseAuth.getInstance();
+
     }
 
     @Override

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_main"
+    app:startDestination="@id/mainFragment">
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.example.houer.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_mainFragment_to_nguoiKetNoiFragment"
+            app:destination="@id/nguoiKetNoiFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/nguoiKetNoiFragment"
+        android:name="com.example.houer.NguoiKetNoiFragment"
+        android:label="fragment_nguoi_ket_noi"
+        tools:layout="@layout/fragment_nguoi_ket_noi" >
+        <action
+            android:id="@+id/action_nguoiKetNoiFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.houer.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
+</navigation>
